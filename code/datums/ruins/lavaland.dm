@@ -127,7 +127,7 @@
 	name = "Blood-Drunk Miner"
 	id = "blooddrunk"
 	description = "A strange arrangement of stone tiles and an insane, beastly miner contemplating them."
-	suffix = "lavaland_surface_blooddrunk1.dmm"
+	suffix = "lavaland_surface_blooddrunk2.dmm"
 	cost = 0
 	allow_duplicates = FALSE //will only spawn one variant of the ruin
 
