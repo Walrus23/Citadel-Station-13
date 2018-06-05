@@ -497,12 +497,12 @@
 	// If targeting anything else, see if the wear suit is thin enough.
 	if (!penetrate_thick)
 		if(above_neck(target_zone))
-			if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+			if(head && istype(head, /obj/item/clothing))
 				var/obj/item/clothing/CH = head
 				if (CH.clothing_flags & THICKMATERIAL)
 					. = 0
 		else
-			if(wear_suit && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+			if(wear_suit && istype(wear_suit, /obj/item/clothing))
 				var/obj/item/clothing/CS = wear_suit
 				if (CS.clothing_flags & THICKMATERIAL)
 					. = 0
@@ -596,20 +596,16 @@
 		threatcount += 6 //fuk u antags <3
 
 	//Check for nonhuman scum
-	if(dna && dna.species.id && !(dna.species.id in list("human" , "lizard", "mammal", "avian", "aquatic", "insect")))
+	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
 	if(isloyal())
 		threatcount -= 1
 
-	//Agent cards lower threatlevel. But only enough to openly carry without being busted.
+	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/card/id/syndicate))
-		threatcount -= 2
-
-	//CentCom cards lower threat level. Even to emagged bots.
-	if(istype(idcard, /obj/item/card/id/centcom) || istype(idcard, /obj/item/card/id/ert))
-		threatcount -= 10
+		threatcount -= 5
 
 	return threatcount
 
@@ -677,23 +673,6 @@
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
 		else
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
-
-/mob/living/carbon/human/generateStaticOverlay()
-	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["static"] = staticOverlay
-
-	staticOverlay = image(icon('icons/effects/effects.dmi', "blank"), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["blank"] = staticOverlay
-
-	staticOverlay = getLetterImage(src, "H", 1)
-	staticOverlay.override = 1
-	staticOverlays["letter"] = staticOverlay
-
-	staticOverlay = getRandomAnimalImage(src)
-	staticOverlay.override = 1
-	staticOverlays["animal"] = staticOverlay
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))

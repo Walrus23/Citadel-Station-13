@@ -42,7 +42,7 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H.get_equipped_items())
+	for(var/obj/item/I in H.get_equipped_items(TRUE))
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
@@ -65,7 +65,7 @@
 
 	sword = new(H)
 	if(!GLOB.highlander)
-		sword.admin_spawned = TRUE //To prevent announcing
+		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)
 
